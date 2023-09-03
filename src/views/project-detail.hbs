@@ -1,0 +1,184 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail Blog</title>
+    <link rel="stylesheet" href="./../style/project-detail.css" />
+    <!-- google fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      * { font-family: Poppins; }
+    </style>
+    <script
+      src="https://kit.fontawesome.com/2d2e41954d.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid ms-5">
+          <img
+            src="https://dumbways.id/assets/images/brandred.png"
+            alt="Logo Dumbways"
+            style="height: 30px; width: 30px"
+          />
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/">Home</a>
+              </li>
+              {{#if isLogin}}
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="/blog">Add
+                    Project</a>
+                </li>
+              {{/if}}
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  aria-current="page"
+                  href="/testimonial"
+                >Testimonials</a>
+              </li>
+            </ul>
+            <div class="d-flex justify-content-end">
+              <ul class="navbar-nav me-auto mb-2 ms-5 mb-lg-0">
+                {{#if isLogin}}
+                  <li class="nav-item">
+                    <a
+                      class="nav-link text-danger active fw-semibold"
+                      style="pointer: none"
+                    >{{user}}</a>
+                  </li>
+                  <li class="nav-item ms-3">
+                    <a class="nav-link" href="/logout">Logout</a>
+                  </li>
+                {{else}}
+                  <li class="nav-item">
+                    <a class="nav-link" href="/register">Register</a>
+                  </li>
+                  <li class="nav-item ms-3">
+                    <a class="nav-link" href="/login">Login</a>
+                  </li>
+                {{/if}}
+              </ul>
+              <a class="btn btn-danger btn-submit ms-5" href="/contact">Contact
+                Me</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      {{#each data}}
+        <div class="container mt-5">
+          <h1 class="text-center fw-bold"> {{this.title}} </h1>
+
+          {{! content }}
+          <div class="content d-flex mt-3">
+            <div class="content-image" style="flex: 70%">
+              <img
+                src="../uploads/{{this.image}}"
+                alt="Gambar Coding"
+                style="width: 100%; height: 400px"
+              />
+            </div>
+
+            {{! duration }}
+            <div class="content-tech ps-5" style="flex: 30%">
+              <div class="duration">
+                <h2 class="fw-bold">Duration</h2>
+                <div class="date">
+                  <div>
+                    <i class="fa-regular fa-calendar" style="color: #000000">
+                    </i>
+                    {{this.startDate}}
+                    -
+                    {{this.endDate}}
+                  </div>
+                  <div>
+                    <i class="fa-regular fa-clock" style="color: #000000"></i>
+                    {{this.duration}}
+                  </div>
+                </div>
+              </div>
+
+              {{! technologies }}
+              <div class="technologies">
+                <h2 class="fw-bold pt-5">Technologies</h2>
+                <div class="fs-5">
+                  {{#if this.node}}
+                    <p><i
+                        class="fa-brands fa-node"
+                        style="color: #000000"
+                      ></i>Node JS</p>
+                  {{else}}
+                  {{/if}}
+                  {{#if this.golang}}
+                    <p><i
+                        class="fa-brands fa-golang"
+                        style="color: #000000"
+                      ></i>Golang</p>
+                  {{else}}
+                  {{/if}}
+                  {{#if this.react}}
+                    <p><i
+                        class="fa-brands fa-react"
+                        style="color: #000000"
+                      ></i>React JS</p>
+                  {{else}}
+                  {{/if}}
+                  {{#if this.js}}
+                    <p><i
+                        class="fa-brands fa-js"
+                        style="color: #000000"
+                      ></i>Javascript</p>
+                  {{else}}
+                  {{/if}}
+                </div>
+              </div>
+              <div class="fs-5">
+                <p>Author : {{this.author}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="text-content mt-3 fs-4">
+            <p style="text-align: justify">
+              {{this.content}}
+            </p>
+          </div>
+        </div>
+      {{/each}}
+    </main>
+    <script src="./js/index.js"></script>
+  </body>
+</html>

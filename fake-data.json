@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "Hari ini sangat cerah",
+    "content": "lorem ipsum",
+    "author": "Jhon Doe",
+    "postAt": "2023-08-12"
+  },
+  {
+    "id": 2,
+    "title": "Hari ini sangat cerah",
+    "content": "lorem ipsum",
+    "author": "Jhon Doe",
+    "postAt": "2023-12-30"
+  },
+  {
+    "id": 3,
+    "title": "Hari ini sangat cerah",
+    "content": "lorem ipsum",
+    "author": "Jhon Doe",
+    "postAt": "2023-01-05"
+  }
+]
