@@ -105,30 +105,29 @@ const testimonial = (req, res) => {
 const addBlog = async (req, res) => {
   try {
     const postAt = new Date();
-    const { dateStart, dateEnd } = req.body;
+    const {
+      inputName,
+      inputDescription,
+      dateStart,
+      dateEnd,
+      node,
+      golang,
+      react,
+      javascript,
+    } = req.body;
     const image = req.file.filename;
     const author = req.session.idUser;
 
-    const query = `INSERT INTO "Blogs" (title, content, duration, "startDate", "endDate", image, "postAt", "fullTime", author, node, golang, react, js) VALUES (:title, :content, '${duration(
+    const query = `INSERT INTO "Blogs" (title, content, duration, "startDate", "endDate", image, "postAt", "fullTime", author, node, golang, react, js) VALUES ('${inputName}', '${inputDescription}', '${duration(
       dateStart,
       dateEnd
-    )}', :dateStart, :dateEnd, '${image}', NOW(), '${getFullTime(
+    )}', '${dateStart}' , '${dateEnd}', '${image}', NOW(), '${getFullTime(
       postAt
-    )}', '${author}', :node, :golang, :react, :js)`;
+    )}', '${author}', ${node ? true : false}, ${golang ? true : false}, ${
+      react ? true : false
+    }, ${javascript ? true : false})`;
 
-    await sequelize.query(query, {
-      replacements: {
-        title: req.body.inputName,
-        content: req.body.inputDescription,
-        dateStart: req.body.dateStart,
-        dateEnd: req.body.dateEnd,
-        node: req.body.nodejs ? true : false,
-        golang: req.body.golang ? true : false,
-        react: req.body.react ? true : false,
-        js: req.body.javascript ? true : false,
-      },
-      type: QueryTypes.INSERT,
-    });
+    await sequelize.query(query);
 
     res.redirect("/");
   } catch (error) {
@@ -199,27 +198,29 @@ const editBlog = async (req, res) => {
 const updateBlog = async (req, res) => {
   try {
     const { id } = req.params;
-    const { inputStartDate, inputEndDate } = req.body;
+    const {
+      inputName,
+      inputDescription,
+      inputStartDate,
+      inputEndDate,
+      techNode,
+      techGolang,
+      techReact,
+      techJavascript,
+    } = req.body;
     const dateNow = new Date();
 
-    const query = `UPDATE "Blogs" SET title=:title, content=:content, duration='${duration(
+    const query = `UPDATE "Blogs" SET title='${inputName}', content='${inputDescription}', duration='${duration(
       inputStartDate,
       inputEndDate
-    )} ', "startDate"=:startDate, "endDate"=:endDate, node=:node, golang=:golang, react=:react, js=:js, "postAt"=NOW(), "fullTime"='${getFullTime(
-      dateNow
-    )}' WHERE id=${id}`;
-    await sequelize.query(query, {
-      replacements: {
-        title: req.body.inputName,
-        content: req.body.inputDescription,
-        startDate: req.body.inputStartDate,
-        endDate: req.body.inputEndDate,
-        node: req.body.techNode ? true : false,
-        golang: req.body.techGolang ? true : false,
-        react: req.body.techReact ? true : false,
-        js: req.body.techJavascript ? true : false,
-      },
-    });
+    )} ', "startDate"='${inputStartDate}', "endDate"='${inputEndDate}', node=${
+      techNode ? true : false
+    }, golang=${techGolang ? true : false}, react=${
+      techReact ? true : false
+    }, js=${
+      techJavascript ? true : false
+    }, "postAt"=NOW(), "fullTime"='${getFullTime(dateNow)}' WHERE id=${id}`;
+    await sequelize.query(query);
 
     res.redirect("/");
   } catch (error) {
